@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_boq_category_user,boq.category User,model_boq_category,base.group_user,1,0,0,0
+access_boq_category_manager,boq.category Manager,model_boq_category,group_construction_manager,1,1,1,1
+access_boq_job_user,boq.job User,model_boq_job,base.group_user,1,0,0,0
+access_boq_job_manager,boq.job Manager,model_boq_job,group_construction_manager,1,1,1,1
+access_stock_picking_inspection_user,stock.picking.inspection User,model_stock_picking_inspection,base.group_user,1,1,1,1

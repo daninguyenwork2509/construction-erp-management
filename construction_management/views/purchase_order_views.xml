@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================== Form View ======================== -->
+    <record id="purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order - Construction Form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Tab "General" - Thêm Cost Guardrail section -->
+            <xpath expr="//group[@name='partner_info']" position="after">
+                <group name="project_info" string="Thông tin Dự án &amp; Kiểm soát Chi phí">
+                    <field name="task_id" />
+                    <field name="sale_order_id" />
+                    <field name="bypass_inventory" />
+                </group>
+            </xpath>
+
+            <!-- Thêm Stop Loss Warning ở đầu form -->
+            <xpath expr="//sheet" position="before">
+                <div attrs="{'invisible': [('is_cost_guardrail_warning', '=', False)]}"
+                     class="alert alert-warning" role="alert">
+                    <strong>⚠️ CẢNH BÁO STOP LOSS:</strong>
+                    <br/>
+                    <field name="cost_guardrail_message" nolabel="1" colspan="4"/>
+                    <br/>
+                    <button name="action_view_cost_guardrail" type="object"
+                            string="Chi tiết" class="btn-sm btn-info"/>
+                </div>
+            </xpath>
+
+            <!-- SmartButton: Chi tiết Stop Loss -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_cost_guardrail" type="object"
+                        class="oe_stat_button" icon="fa-bar-chart"
+                        attrs="{'invisible': [('is_cost_guardrail_warning', '=', False)]}">
+                    <span>Stop Loss</span>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== Tree View ======================== -->
+    <record id="purchase_order_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.order - Construction Tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="is_cost_guardrail_warning" />
+                <field name="task_id" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== Search View ======================== -->
+    <record id="purchase_order_search_inherit" model="ir.ui.view">
+        <field name="name">purchase.order - Construction Search</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_search"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//filter[@name='no_invoiced']" position="after">
+                <separator/>
+                <filter name="stop_loss_warning" string="⚠️ Stop Loss Warning"
+                        domain="[('is_cost_guardrail_warning', '=', True)]"/>
+                <filter name="has_task" string="Có Project Task"
+                        domain="[('task_id', '!=', False)]"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="task_id" />
+                <field name="sale_order_id" />
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================== FORM VIEW ======================== -->
+    <record id="project_milestone_form_inherit" model="ir.ui.view">
+        <field name="name">project.milestone - Construction QA Form</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project.project_milestone_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add Header Buttons -->
+            <xpath expr="//header" position="inside">
+                <button name="action_accept_milestone"
+                        type="object"
+                        string="✓ Nghiệm Thu Mốc"
+                        class="btn-primary"
+                        attrs="{'invisible': [('is_reached', '=', True)]}"
+                        groups="construction_management.group_project_manager_supervisor,construction_management.group_construction_manager"
+                        help="PM/Director xác nhận mốc đã hoàn thành &amp; đạt chất lượng. Hệ thống tự động thông báo cho Kế toán." />
+
+                <button name="action_view_accounting_activity"
+                        type="object"
+                        string="📧 Activity Kế Toán"
+                        class="btn-secondary"
+                        attrs="{'invisible': [('is_accounting_notified', '=', False)]}"
+                        help="Xem Activity được gửi cho Kế toán" />
+            </xpath>
+
+            <!-- Add Smart Buttons -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <!-- QA Status -->
+                <button class="oe_stat_button" icon="fa-check-circle"
+                        attrs="{'invisible': [('is_reached', '=', False)]}">
+                    <field name="is_reached" widget="boolean"/>
+                    <span>Đã Nghiệm Thu</span>
+                </button>
+
+                <!-- Accounting Notification Status -->
+                <button class="oe_stat_button" icon="fa-bell"
+                        attrs="{'invisible': [('is_accounting_notified', '=', False)]}">
+                    <field name="is_accounting_notified" widget="boolean"/>
+                    <span>Thông Báo Kế Toán</span>
+                </button>
+            </xpath>
+
+            <!-- Add QA Section -->
+            <xpath expr="//field[@name='deadline']" position="after">
+                <group name="qa_section" string="✓ KIỂM SOÁT CHẤT LƯỢNG (QA)" colspan="2">
+                    <field name="is_reached" readonly="1" />
+                    <field name="reached_by_id" readonly="1" />
+                    <field name="reached_date" readonly="1" />
+                    <field name="qa_notes" />
+                </group>
+            </xpath>
+
+            <!-- Add Accounting Section -->
+            <xpath expr="//field[@name='deadline']" position="after">
+                <group name="accounting_section" string="🔔 THÔNG BÁO KỂ TOÁN" colspan="2">
+                    <field name="is_accounting_notified" readonly="1" />
+                    <field name="accounting_activity_id" readonly="1" />
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== TREE VIEW ======================== -->
+    <record id="project_milestone_tree_inherit" model="ir.ui.view">
+        <field name="name">project.milestone - Construction Tree</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project.project_milestone_view_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="is_reached" />
+                <field name="reached_by_id" />
+                <field name="is_accounting_notified" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== SEARCH VIEW ======================== -->
+    <record id="project_milestone_search_inherit" model="ir.ui.view">
+        <field name="name">project.milestone - Construction Search</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project.project_milestone_view_search"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//filter[@name='deadline_today']" position="after">
+                <separator/>
+                <filter name="reached" string="✓ Đã Nghiệm Thu"
+                        domain="[('is_reached', '=', True)]"/>
+                <filter name="not_reached" string="⏳ Chưa Nghiệm Thu"
+                        domain="[('is_reached', '=', False)]"/>
+                <filter name="accounting_notified" string="📧 Đã Thông Báo Kế Toán"
+                        domain="[('is_accounting_notified', '=', True)]"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ===== FORM VIEW - SALE ORDER ===== -->
+        <record id="view_sale_order_form_construction" model="ir.ui.view">
+            <field name="name">sale.order.form.construction</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id">sale.view_order_form</field>
+            <field name="arch" type="xml">
+                <!-- Thêm nút bấm vào Header -->
+                <xpath expr="//header/button[@name='action_quotation_send']" position="before">
+                    <button
+                        name="action_request_survey"
+                        type="object"
+                        string="Yêu cầu Khảo sát"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('state', '!=', 'lead')]}"
+                    />
+                    <button
+                        name="action_pm_approve"
+                        type="object"
+                        string="Duyệt Giá (PM)"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('state', '!=', 'waiting_pm')]}"
+                    />
+                </xpath>
+
+                <!-- Chèn các trường custom ngay dưới partner_id - construction_type ở vị trí ưu tiên -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field
+                        name="construction_type"
+                        widget="radio"
+                        required="True"
+                        class="o_field_widget o_field_selection"
+                        colspan="2"
+                    />
+                </xpath>
+
+                <!-- Chèn project_address và estimated_budget ngay sau construction_type -->
+                <xpath expr="//field[@name='construction_type']" position="after">
+                    <field
+                        name="project_address"
+                        required="True"
+                        colspan="2"
+                    />
+                    <field name="estimated_budget" widget="monetary" />
+                    <field name="customer_notes" colspan="2" />
+                </xpath>
+
+                <!-- Thêm pm_id vào Other Information -->
+                <xpath expr="//group[@name='sale_details']/group[1]" position="inside">
+                    <field name="pm_id" />
+                </xpath>
+
+                <!-- Cấu trúc lại cột trong bảng Order Lines để hiển thị job_id -->
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="after">
+                    <field name="job_id" required="True" />
+                    <field name="is_subcontracted" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ===== TREE VIEW - SALE ORDER (Danh sách) ===== -->
+        <record id="view_sale_order_tree_construction" model="ir.ui.view">
+            <field name="name">sale.order.tree.construction</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id">sale.view_orders_tree</field>
+            <field name="arch" type="xml">
+                <!-- Thêm cột construction_type vào tree -->
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="construction_type" />
+                    <field name="project_address" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ===== SEARCH VIEW - SALE ORDER ===== -->
+        <record id="view_sale_order_search_construction" model="ir.ui.view">
+            <field name="name">sale.order.search.construction</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id">sale.view_orders_search</field>
+            <field name="arch" type="xml">
+                <!-- Thêm filter theo construction_type -->
+                <xpath expr="//filter[@name='order_date']" position="after">
+                    <separator />
+                    <filter
+                        name="filter_civil_structural"
+                        string="Xây dựng Cơ bản & Kết cấu (Civil & Structural)"
+                        domain="[('construction_type', '=', 'civil_structural')]"
+                    />
+                    <filter
+                        name="filter_fitout_renovation"
+                        string="Hoàn thiện & Cải tạo (Fit-out & Renovation)"
+                        domain="[('construction_type', '=', 'fitout_renovation')]"
+                    />
+                    <filter
+                        name="filter_decoration"
+                        string="Trang trí & Lắp đặt (Decoration & Event)"
+                        domain="[('construction_type', '=', 'decoration')]"
+                    />
+                </xpath>
+
+                <!-- Thêm filter theo state -->
+                <xpath expr="//filter[@name='order_date']" position="after">
+                    <separator />
+                    <filter
+                        name="filter_lead"
+                        string="Lead (Mới tạo)"
+                        domain="[('state', '=', 'lead')]"
+                    />
+                    <filter
+                        name="filter_surveying"
+                        string="Đang khảo sát"
+                        domain="[('state', '=', 'surveying')]"
+                    />
+                    <filter
+                        name="filter_waiting_pm"
+                        string="Chờ PM duyệt"
+                        domain="[('state', '=', 'waiting_pm')]"
+                    />
+                    <filter
+                        name="filter_sale"
+                        string="Đã chốt hợp đồng"
+                        domain="[('state', '=', 'sale')]"
+                    />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ===== FORM VIEW - SALE ORDER LINE (Chi tiết báo giá) ===== -->
+        <record id="view_sale_order_line_form_construction" model="ir.ui.view">
+            <field name="name">sale.order.line.form.construction</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id">sale.view_order_line_form</field>
+            <field name="arch" type="xml">
+                <!-- Chèn job_id và is_subcontracted -->
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="job_id" required="True" />
+                    <field name="is_subcontracted" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ===== PORTAL SIGNATURE TAB ===== -->
+        <record id="view_sale_order_form_portal_signature" model="ir.ui.view">
+            <field name="name">sale.order.form.portal.signature</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id">view_sale_order_form_construction</field>
+            <field name="arch" type="xml">
+
+                <!-- Thêm tab "Ký Điện Tử" trước tab Nội dung -->
+                <xpath expr="//notebook" position="before">
+                    <!-- Portal Access & Signature Section -->
+                    <div class="alert alert-info" attrs="{'invisible': [('state', '!=', 'sale')]}">
+                        <p><strong>ℹ️ CHIA SẺ LINK DUYỆT VO:</strong></p>
+                        <p>Gửi link này để khách hàng duyệt và ký điện tử báo giá:</p>
+                        <code style="background: #f0f0f0; padding: 10px; display: block; margin: 10px 0;" t-esc="portal_url" />
+                        <button name="action_send_portal_link" type="object" string="📧 Gửi Email Link" class="btn btn-sm btn-primary" />
+                        <button name="action_generate_new_token" type="object" string="🔄 Tạo Token Mới" class="btn btn-sm btn-secondary" />
+                    </div>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page name="signature" string="🖊️ Ký Điện Tử">
+
+                        <!-- Portal Access Section -->
+                        <group string="1️⃣ Truy Cập Portal">
+                            <field name="access_token" readonly="1" />
+                            <field name="portal_url" readonly="1" widget="url" />
+                            <field name="is_portal_verified" readonly="1" />
+                            <field name="verification_phone" readonly="1" />
+                            <field name="verification_timestamp" readonly="1" />
+                        </group>
+
+                        <!-- Digital Signature Section -->
+                        <group string="2️⃣ Chữ Ký Điện Tử">
+                            <field name="is_signed_electronically" readonly="1" />
+                            <field name="signed_by" readonly="1" />
+                            <field name="signed_by_phone" readonly="1" />
+                            <field name="signature_timestamp" readonly="1" />
+                            <field name="signature_ip" readonly="1" />
+                        </group>
+
+                        <!-- Audit Log -->
+                        <group string="3️⃣ Audit Log">
+                            <field name="signature_audit_log" readonly="1" nolabel="1" colspan="4" />
+                            <field name="portal_access_log" readonly="1" nolabel="1" colspan="4" />
+                        </group>
+
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

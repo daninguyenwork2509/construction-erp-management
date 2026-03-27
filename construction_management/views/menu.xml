@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menu gốc: Quản lý Thi Công -->
+        <menuitem
+            id="menu_construction_management"
+            name="Quản lý Thi Công"
+            sequence="1"
+        />
+
+        <!-- Menu con 1: Dự án mới (Leads) -->
+        <menuitem
+            id="menu_leads_sale_order"
+            name="Dự án mới (Leads)"
+            parent="menu_construction_management"
+            action="action_construction_leads"
+            sequence="10"
+        />
+
+        <!-- Action cho Leads (state = lead) -->
+        <record id="action_construction_leads" model="ir.actions.act_window">
+            <field name="name">Dự án mới (Leads)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'lead'), ('construction_type', '!=', False)]</field>
+            <field name="context">{'default_construction_type': 'civil_structural'}</field>
+        </record>
+
+        <!-- Menu con 2: Chờ PM Duyệt -->
+        <menuitem
+            id="menu_waiting_pm_sale_order"
+            name="Chờ PM Duyệt"
+            parent="menu_construction_management"
+            action="action_waiting_pm_sale_order"
+            sequence="20"
+        />
+
+        <!-- Action cho Chờ PM Duyệt (state = waiting_pm) -->
+        <record id="action_waiting_pm_sale_order" model="ir.actions.act_window">
+            <field name="name">Chờ PM Duyệt</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'waiting_pm')]</field>
+        </record>
+
+        <!-- Menu con 3: Danh mục BOQ -->
+        <menuitem
+            id="menu_boq_setup"
+            name="Danh mục BOQ"
+            parent="menu_construction_management"
+            sequence="30"
+        />
+
+        <!-- Menu con 3.1: Hạng mục (Level 1) -->
+        <menuitem
+            id="menu_boq_category"
+            name="Hạng mục (Level 1)"
+            parent="menu_boq_setup"
+            action="action_boq_category"
+            sequence="31"
+        />
+
+        <!-- Action cho BOQ Category -->
+        <record id="action_boq_category" model="ir.actions.act_window">
+            <field name="name">Hạng mục (Level 1)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">boq.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu con 3.2: Công tác (Level 2) -->
+        <menuitem
+            id="menu_boq_job"
+            name="Công tác (Level 2)"
+            parent="menu_boq_setup"
+            action="action_boq_job"
+            sequence="32"
+        />
+
+        <!-- Action cho BOQ Job -->
+        <record id="action_boq_job" model="ir.actions.act_window">
+            <field name="name">Công tác (Level 2)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">boq.job</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu con 4: Tasks Khảo sát & Thiết kế -->
+        <menuitem
+            id="menu_survey_design_tasks"
+            name="Tasks Khảo sát and Thiết kế"
+            parent="menu_construction_management"
+            action="action_construction_tasks"
+            sequence="40"
+        />
+
+        <!-- Action cho Construction Tasks -->
+        <record id="action_construction_tasks" model="ir.actions.act_window">
+            <field name="name">Tasks Khảo sát and Thiết kế</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('task_stage_type', 'in', ['survey', 'design'])]</field>
+        </record>
+
+    </data>
+</odoo>

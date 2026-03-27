@@ -1,0 +1,85 @@
+id,code,name,category_code,work_type,sequence,default_uom,description,active
+boq_job_cs_pd_01,CS.PD.01,Đập phá tường chịu lực,CS.PD,civil_structural,10,m2,Tường 200 - tường BT,True
+boq_job_cs_pd_02,CS.PD.02,Đập phá nền bê tông,CS.PD,civil_structural,20,m2,,True
+boq_job_cs_pd_03,CS.PD.03,Khoan rút lõi đà,CS.PD,civil_structural,30,lỗ,Để thi công ống đồng,True
+boq_job_cs_xt_01,CS.XT.01,Xây tường 100,CS.XT,civil_structural,10,m2,Hệ số 1.1,True
+boq_job_cs_xt_02,CS.XT.02,Xây tường 200,CS.XT,civil_structural,20,m2,,True
+boq_job_cs_xt_03,CS.XT.03,Xây bờ ban công,CS.XT,civil_structural,30,md,,True
+boq_job_cs_lt_01,CS.LT.01,Đổ lanh tô cửa phòng,CS.LT,civil_structural,10,cái,,True
+boq_job_cs_tr_01,CS.TR.01,Trát tường xây mới 2 mặt,CS.TR,civil_structural,10,m2,Hệ số 1.1-1.2,True
+boq_job_cs_tr_02,CS.TR.02,Trát cạnh cửa,CS.TR,civil_structural,20,md,,True
+boq_job_cs_ct_01,CS.CT.01,Chống thấm sàn WC,CS.CT,civil_structural,10,m2,Hệ số 1.2,True
+boq_job_cs_ct_02,CS.CT.02,Chống thấm ban công,CS.CT,civil_structural,20,m2,,True
+boq_job_cs_cn_01,CS.CN.01,Cán nền toàn bộ,CS.CN,civil_structural,10,m2,,True
+boq_job_cs_cn_02,CS.CN.02,Nâng nền bếp/WC (2-4cm),CS.CN,civil_structural,20,m2,,True
+boq_job_cs_kt_01,CS.KT.01,V 40x40x3,CS.KT,civil_structural,10,kg,,True
+boq_job_cs_kt_02,CS.KT.02,V 50x50x4,CS.KT,civil_structural,20,kg,,True
+boq_job_cs_kt_03,CS.KT.03,V 25x25x2,CS.KT,civil_structural,30,kg,,True
+boq_job_cs_kt_04,CS.KT.04,Tole phẳng,CS.KT,civil_structural,40,m2,,True
+boq_job_cs_kt_05,CS.KT.05,Bản mã 200x200x8mm,CS.KT,civil_structural,50,tấm,,True
+boq_job_cs_mo_01,CS.MO.01,Cọc ép tải,CS.MO,civil_structural,10,md,Theo thiết kế,True
+boq_job_cs_mo_02,CS.MO.02,Đào đất móng,CS.MO,civil_structural,20,m3,Hệ số 1.3,True
+boq_job_cs_mo_03,CS.MO.03,Lấp đất móng,CS.MO,civil_structural,30,m3,25% KL đào,True
+boq_job_cs_mo_04,CS.MO.04,Coppha móng + giằng,CS.MO,civil_structural,40,m2,,True
+boq_job_cs_mo_05,CS.MO.05,BT lót móng,CS.MO,civil_structural,50,m3,,True
+boq_job_cs_mo_06,CS.MO.06,BT móng + giằng,CS.MO,civil_structural,60,m3,,True
+boq_job_cs_ss_01,CS.SS.01,Sơn chống sét + sơn phủ,CS.SS,civil_structural,10,m2,,True
+boq_job_cs_vc_01,CS.VC.01,Vận chuyển kết cấu,CS.VC,civil_structural,10,kg,,True
+boq_job_cs_vc_02,CS.VC.02,Lắp đặt kết cấu hiện trường,CS.VC,civil_structural,20,kg,,True
+boq_job_fr_td_01,FR.TD.01,Cạo lớp sơn tường cũ,FR.TD,fitout_renovation,10,m2,Gồm lớp bả,True
+boq_job_fr_td_02,FR.TD.02,Tháo dỡ gạch nền,FR.TD,fitout_renovation,20,m2,,True
+boq_job_fr_td_03,FR.TD.03,Tháo dỡ gạch ốp tường,FR.TD,fitout_renovation,30,m2,,True
+boq_job_fr_td_04,FR.TD.04,Tháo dỡ trần thạch cao,FR.TD,fitout_renovation,40,m2,,True
+boq_job_fr_td_05,FR.TD.05,Tháo dỡ TBVS,FR.TD,fitout_renovation,50,gói,,True
+boq_job_fr_td_06,FR.TD.06,Tháo dỡ máy lạnh,FR.TD,fitout_renovation,60,bộ,,True
+boq_job_fr_td_07,FR.TD.07,Tháo dỡ cửa phòng,FR.TD,fitout_renovation,70,bộ,,True
+boq_job_fr_td_08,FR.TD.08,Tháo dỡ bếp,FR.TD,fitout_renovation,80,bộ,,True
+boq_job_fr_ol_01,FR.OL.01,Ốp gạch tường WC,FR.OL,fitout_renovation,10,m2,,True
+boq_job_fr_ol_02,FR.OL.02,Lát gạch nền,FR.OL,fitout_renovation,20,m2,,True
+boq_job_fr_sn_01,FR.SN.01,Bả mattic tường + trần,FR.SN,fitout_renovation,10,m2,Bột bả Việt Mỹ,True
+boq_job_fr_sn_02,FR.SN.02,Sơn tường trong nhà 1 lót 2 phủ,FR.SN,fitout_renovation,20,m2,Dulux Maxilite,True
+boq_job_fr_tc_01,FR.TC.01,Trần thạch cao phẳng chìm,FR.TC,fitout_renovation,10,m2,,True
+boq_job_fr_tc_02,FR.TC.02,Trần thạch cao chống ẩm,FR.TC,fitout_renovation,20,m2,WC,True
+boq_job_fr_tc_03,FR.TC.03,Vách thạch cao 2 mặt,FR.TC,fitout_renovation,30,m2,,True
+boq_job_fr_cu_01,FR.CU.01,Cửa nhôm kính 1 cánh,FR.CU,fitout_renovation,10,m2,Nhôm TK/TS,True
+boq_job_fr_cu_02,FR.CU.02,Cửa gỗ phòng,FR.CU,fitout_renovation,20,bộ,,True
+boq_job_fr_cu_03,FR.CU.03,Bản lề sàn,FR.CU,fitout_renovation,30,bộ,VPP ThaiLan,True
+boq_job_fr_vk_01,FR.VK.01,Vách kính cường lực 10mm,FR.VK,fitout_renovation,10,m2,Kính Việt Nhật,True
+boq_job_fr_hd_01,FR.HD.01,NC đi dây điện âm tường,FR.HD,fitout_renovation,10,m2,Gồm ống + cáp,True
+boq_job_fr_hd_02,FR.HD.02,MCB / RCBO,FR.HD,fitout_renovation,20,cái,,True
+boq_job_fr_hd_03,FR.HD.03,Công tắc + Ổ cắm,FR.HD,fitout_renovation,30,cái,,True
+boq_job_fr_hd_04,FR.HD.04,Đèn trần + trang trí,FR.HD,fitout_renovation,40,cái,,True
+boq_job_fr_hd_05,FR.HD.05,Led dây hắt trần,FR.HD,fitout_renovation,50,md,,True
+boq_job_fr_dh_01,FR.DH.01,Ống đồng,FR.DH,fitout_renovation,10,md,,True
+boq_job_fr_dh_02,FR.DH.02,Giàn lạnh,FR.DH,fitout_renovation,20,cái,,True
+boq_job_fr_dh_03,FR.DH.03,Giàn nóng,FR.DH,fitout_renovation,30,cái,,True
+boq_job_fr_da_01,FR.DA.01,Đá bàn bếp,FR.DA,fitout_renovation,10,md,,True
+boq_job_fr_da_02,FR.DA.02,Đá lavabo,FR.DA,fitout_renovation,20,md,,True
+boq_job_fr_da_03,FR.DA.03,Đá ngạch cửa,FR.DA,fitout_renovation,30,md,,True
+boq_job_fr_nt_01,FR.NT.01,Tủ bếp trên,FR.NT,fitout_renovation,10,md,,True
+boq_job_fr_nt_02,FR.NT.02,Tủ bếp dưới,FR.NT,fitout_renovation,20,md,,True
+boq_job_fr_nt_03,FR.NT.03,Tủ quần áo (built-in),FR.NT,fitout_renovation,30,m2,,True
+boq_job_fr_nt_04,FR.NT.04,Giường ngủ (built-in),FR.NT,fitout_renovation,40,cái,,True
+boq_job_fr_nt_05,FR.NT.05,Vách đầu giường,FR.NT,fitout_renovation,50,m2,,True
+boq_job_fr_nt_06,FR.NT.06,Tủ tivi,FR.NT,fitout_renovation,60,md,,True
+boq_job_fr_nt_07,FR.NT.07,Phụ kiện bếp (kệ inox),FR.NT,fitout_renovation,70,cái,,True
+boq_job_fr_tb_01,FR.TB.01,Bồn cầu,FR.TB,fitout_renovation,10,cái,,True
+boq_job_fr_tb_02,FR.TB.02,Lavabo,FR.TB,fitout_renovation,20,cái,,True
+boq_job_fr_tb_03,FR.TB.03,Vòi sen / Vòi xả,FR.TB,fitout_renovation,30,bộ,,True
+boq_job_fr_qd_01,FR.QD.01,Quầy giao dịch,FR.QD,fitout_renovation,10,md,Mặt đá + MFC,True
+boq_job_fr_vc_01,FR.VC.01,Vận chuyển xà bần,FR.VC,fitout_renovation,10,chuyến,,True
+boq_job_fr_vc_02,FR.VC.02,Bao che thang máy/hành lang,FR.VC,fitout_renovation,20,gói,,True
+boq_job_fr_vc_03,FR.VC.03,Bạt ngăn chia khu vực TC,FR.VC,fitout_renovation,30,m2,,True
+boq_job_fr_vc_04,FR.VC.04,Vệ sinh công nghiệp,FR.VC,fitout_renovation,40,gói,,True
+boq_job_dc_bh_01,DC.BH.01,Bảng hiệu mặt tiền,DC.BH,decoration,10,bộ,,True
+boq_job_dc_bh_02,DC.BH.02,Chữ nổi hộp đèn,DC.BH,decoration,20,bộ,,True
+boq_job_dc_bh_03,DC.BH.03,Sửa chữ cũ + Khung sắt gia cố,DC.BH,decoration,30,bộ,,True
+boq_job_dc_sn_01,DC.SN.01,Sơn nhận diện thương hiệu,DC.SN,decoration,10,m2,,True
+boq_job_dc_nr_01,DC.NR.01,Ghế chuyên viên,DC.NR,decoration,10,cái,,True
+boq_job_dc_nr_02,DC.NR.02,Ghế lãnh đạo,DC.NR,decoration,20,cái,,True
+boq_job_dc_nr_03,DC.NR.03,Ghế gấp / Ghế quầy bar,DC.NR,decoration,30,cái,,True
+boq_job_dc_nr_04,DC.NR.04,Bàn sofa / Bàn trang trí,DC.NR,decoration,40,cái,,True
+boq_job_dc_nr_05,DC.NR.05,Sofa,DC.NR,decoration,50,bộ,,True
+boq_job_dc_re_01,DC.RE.01,Rèm 2 lớp,DC.RE,decoration,10,m,,True
+boq_job_dc_re_02,DC.RE.02,Rèm gỗ,DC.RE,decoration,20,m,,True
+boq_job_dc_vc_01,DC.VC.01,VC + Lắp đặt + Tháo dỡ,DC.VC,decoration,10,gói,,True

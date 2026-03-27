@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================== RECONCILIATION DASHBOARD TAB ======================== -->
+    <record id="view_sale_order_form_reconciliation" model="ir.ui.view">
+        <field name="name">sale.order.form.reconciliation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="view_sale_order_form_portal_signature"/>
+        <field name="arch" type="xml">
+
+            <!-- Add Reconciliation Tab before Signature Tab -->
+            <xpath expr="//page[@name='signature']" position="before">
+                <page name="reconciliation" string="💰 Quyết Toán & Đóng Dự Án">
+
+                    <!-- Check Status -->
+                    <div class="alert alert-info" attrs="{'invisible': [('all_milestones_reached', '=', False)]}">
+                        <strong>✅ Tất cả Milestone đã hoàn thành</strong>
+                    </div>
+
+                    <div class="alert alert-warning" attrs="{'invisible': [('all_milestones_reached', '=', True)]}">
+                        <strong>⏳ Chưa hoàn thành tất cả Milestone</strong>
+                    </div>
+
+                    <!-- Reconciliation Dashboard -->
+                    <group string="💰 ĐỐI SOÁT THANH TOÁN" colspan="2">
+                        <group colspan="2">
+                            <div style="background: #f9f9f9; padding: 20px; border-radius: 5px;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tr style="border-bottom: 1px solid #ddd; padding: 10px;">
+                                        <td style="padding: 10px; width: 50%; font-weight: bold;">Tổng Giá Trị SO:</td>
+                                        <td style="padding: 10px; text-align: right; font-size: 16px; color: #d9534f;">
+                                            <field name="reconciliation_total_value" readonly="1" widget="monetary"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #ddd; padding: 10px;">
+                                        <td style="padding: 10px; width: 50%; font-weight: bold;">Tổng Đã Thu:</td>
+                                        <td style="padding: 10px; text-align: right; font-size: 16px; color: #5cb85c;">
+                                            <field name="reconciliation_total_paid" readonly="1" widget="monetary"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 2px solid #ddd; padding: 10px;">
+                                        <td style="padding: 10px; width: 50%; font-weight: bold;">Số Tiền Còn Lại:</td>
+                                        <td style="padding: 10px; text-align: right; font-size: 16px; color: #d9534f;">
+                                            <field name="reconciliation_remaining" readonly="1" widget="monetary"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="padding: 10px; background: #f0f0f0;">
+                                        <td style="padding: 10px; width: 50%; font-weight: bold;">% Thu Tiền:</td>
+                                        <td style="padding: 10px; text-align: right; font-size: 18px; color: #0275d8; font-weight: bold;">
+                                            <field name="reconciliation_percentage" readonly="1" widget="float" digits="[5,1]"/>%
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </group>
+                    </group>
+
+                    <!-- Fully Paid Status -->
+                    <group string="✅ XÁC NHẬN THANH TOÁN" colspan="2">
+                        <field name="is_fully_paid" readonly="1" />
+                        <field name="fully_paid_date" readonly="1" />
+                        <field name="fully_paid_by_id" readonly="1" />
+                    </group>
+
+                    <!-- Project Closure Status -->
+                    <group string="🔒 ĐÓNG DỰ ÁN" colspan="2">
+                        <field name="is_project_closed" readonly="1" />
+                        <field name="project_closed_date" readonly="1" />
+                        <field name="project_closed_by_id" readonly="1" />
+                    </group>
+
+                    <!-- Action Buttons -->
+                    <group colspan="2">
+                        <button name="action_confirm_fully_paid"
+                                type="object"
+                                string="✅ Xác Nhận Thu Đủ 100%"
+                                class="btn-primary"
+                                attrs="{'invisible': [('is_fully_paid', '=', True)]}"
+                                groups="account.group_account_invoice"
+                                help="Kế toán xác nhận đã thu đủ tiền. Sau đó PM có thể đóng dự án." />
+
+                        <button name="action_close_project"
+                                type="object"
+                                string="🔒 Đóng Dự Án"
+                                class="btn-danger"
+                                attrs="{'invisible': ['|', ('is_project_closed', '=', True), ('is_fully_paid', '=', False)]}"
+                                groups="construction_management.group_project_manager_supervisor"
+                                help="PM đóng dự án sau khi Kế toán xác nhận thu đủ tiền. Dự án sẽ bị khóa." />
+
+                        <div attrs="{'invisible': [('is_project_closed', '=', False)]}">
+                            <p style="color: red; font-weight: bold;">
+                                🔒 DỰ ÁN ĐÃ ĐÓNG - Không thể tạo thêm VO, PO hay Task
+                            </p>
+                        </div>
+                    </group>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== TREE VIEW - ADD RECONCILIATION COLUMNS ======================== -->
+    <record id="view_sale_order_tree_reconciliation" model="ir.ui.view">
+        <field name="name">sale.order.tree.reconciliation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="view_sale_order_tree_construction"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='project_address']" position="after">
+                <field name="reconciliation_percentage" optional="hide" />
+                <field name="is_fully_paid" optional="hide" />
+                <field name="is_project_closed" optional="hide" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== SEARCH VIEW - ADD FILTERS ======================== -->
+    <record id="view_sale_order_search_reconciliation" model="ir.ui.view">
+        <field name="name">sale.order.search.reconciliation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="view_sale_order_search_construction"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//filter[@name='filter_sale']" position="after">
+                <separator/>
+                <filter name="fully_paid" string="✅ Thu Đủ 100%"
+                        domain="[('is_fully_paid', '=', True)]"/>
+                <filter name="not_fully_paid" string="⏳ Chưa Thu Đủ"
+                        domain="[('is_fully_paid', '=', False)]"/>
+                <filter name="project_closed" string="🔒 Dự Án Đóng"
+                        domain="[('is_project_closed', '=', True)]"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== PROJECT MILESTONE - ADD RECONCILIATION INFO ======================== -->
+    <record id="project_milestone_form_reconciliation" model="ir.ui.view">
+        <field name="name">project.milestone.form.reconciliation</field>
+        <field name="model">project.milestone</field>
+        <field name="inherit_id" ref="project_milestone_form_inherit"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart button showing if project closed -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" icon="fa-lock"
+                        attrs="{'invisible': [('project_id.is_closed', '=', False)]}">
+                    <span>Dự Án Đóng</span>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

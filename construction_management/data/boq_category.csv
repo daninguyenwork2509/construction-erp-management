@@ -1,0 +1,33 @@
+id,code,name,work_type,sequence,description,typical_uom,has_dimension,risk_note,active
+boq_category_cs_pd,CS.PD,Phá dỡ kết cấu,civil_structural,10,Đập tường chịu lực - phá nền BT - tháo kết cấu,m2/m3,True,Cần kiểm tra kết cấu,True
+boq_category_cs_xt,CS.XT,Xây tường,civil_structural,20,Xây tường 100 - 200 (tường ngăn - tường chịu lực),m2,True,Hệ số hao hụt 1.1,True
+boq_category_cs_lt,CS.LT,Đổ lanh tô,civil_structural,30,Lanh tô xây cửa phòng,cái,False,,True
+boq_category_cs_tr,CS.TR,Trát tường,civil_structural,40,Trát tường xây mới 2 mặt - trát cạnh cửa,m2/md,True,Hệ số 1.1-1.2,True
+boq_category_cs_ct,CS.CT,Chống thấm,civil_structural,50,Chống thấm WC - ban công - sân thượng - mái,m2,True,Hệ số 1.2,True
+boq_category_cs_cn,CS.CN,Cán nền - Nâng nền,civil_structural,60,Cán nền - nâng nền bếp/WC,m2,True,,True
+boq_category_cs_kt,CS.KT,Kết cấu thép,civil_structural,70,Khung thép V các loại - tole - bản mã,kg/m2/tấm,True,Bóc tách per vị trí (md),True
+boq_category_cs_mo,CS.MO,Móng,civil_structural,80,Cọc ép - đào đất - coppha - bê tông móng+giằng,md/m3/m2,True,,True
+boq_category_cs_ss,CS.SS,Sơn chống sét kết cấu,civil_structural,90,Sơn chống sét + sơn phủ kết cấu thép,m2,True,,True
+boq_category_cs_vc,CS.VC,Vận chuyển + Lắp đặt kết cấu,civil_structural,100,VC kết cấu thép đến công trình + lắp đặt,kg,False,,True
+boq_category_fr_td,FR.TD,Tháo dỡ hoàn thiện cũ,fitout_renovation,10,Tháo nền - trần - ốp tường - TBVS - máy lạnh - cửa,m2/bộ/gói,True,,True
+boq_category_fr_ol,FR.OL,Ốp lát gạch,fitout_renovation,20,Ốp gạch tường WC/bếp - lát gạch nền,m2,True,,True
+boq_category_fr_sn,FR.SN,Sơn nước,fitout_renovation,30,Bả mattic + Sơn 1 lót 2 phủ,m2,True,,True
+boq_category_fr_tc,FR.TC,Trần thạch cao,fitout_renovation,40,Trần phẳng chìm - trần chống ẩm WC - vách TC,m2,True,,True
+boq_category_fr_cu,FR.CU,Cửa,fitout_renovation,50,Cửa nhôm kính - cửa gỗ - phụ kiện (bản lề - kẹp),m2/bộ,True,Có nhãn hiệu,True
+boq_category_fr_vk,FR.VK,Vách kính + Vách ngăn nhẹ,fitout_renovation,60,Vách kính cường lực - vách thạch cao ngăn phòng,m2,True,Có nhãn hiệu,True
+boq_category_fr_hd,FR.HD,Hệ điện,fitout_renovation,70,NC đi dây + MCB/RCBO + công tắc/ổ cắm + đèn + led,m2/cái/md,False,,True
+boq_category_fr_hn,FR.HN,Hệ nước,fitout_renovation,80,Hệ cấp-thoát nước WC - bếp,gói/md,False,,True
+boq_category_fr_dh,FR.DH,Điều hòa không khí,fitout_renovation,90,Ống đồng - giàn lạnh/nóng - vật tư phụ,md/cái,False,,True
+boq_category_fr_mg,FR.MG,Mạng + Camera,fitout_renovation,100,Cáp mạng - switch - camera - hạ tầng IT,mét/cái,False,,True
+boq_category_fr_da,FR.DA,Công tác đá,fitout_renovation,110,Đá bàn bếp - đá lavabo - đá ngạch cửa - chỉ ghép,md,True,,True
+boq_category_fr_nt,FR.NT,Nội thất built-in,fitout_renovation,120,Tủ bếp - tủ áo - vách ốp gỗ - kệ gắn tường (cố định),md/m2,True,Theo phòng,True
+boq_category_fr_tb,FR.TB,Thiết bị vệ sinh,fitout_renovation,130,Bồn cầu - lavabo - vòi - phụ kiện phòng tắm,cái/bộ,False,,True
+boq_category_fr_qd,FR.QD,Quầy giao dịch - Reception,fitout_renovation,140,Quầy GD mặt đá + MFC - reception desk,md,True,Gắn cố định,True
+boq_category_fr_vc,FR.VC,Vận chuyển + Bao che + VSCN,fitout_renovation,150,Đổ xà bần - bao che thang máy - vệ sinh công nghiệp,gói/chuyến,False,,True
+boq_category_dc_bh,DC.BH,Biển hiệu + Chữ nổi,decoration,10,Bảng hiệu - chữ nổi hộp đèn - sửa chữ cũ,bộ/m2,False,,True
+boq_category_dc_sn,DC.SN,Sơn nhận diện thương hiệu,decoration,20,Sơn logo - sơn nhận diện trên tường - cổng,m2,True,,True
+boq_category_dc_nr,DC.NR,Nội thất rời,decoration,30,Bàn - ghế - sofa - kệ trang trí (không gắn cố định),cái/bộ,False,Đồ rời - lắp ráp,True
+boq_category_dc_re,DC.RE,Rèm + Vải,decoration,40,Rèm cửa - rèm gỗ - vải trang trí,m/bộ,False,,True
+boq_category_dc_as,DC.AS,Ánh sáng trang trí,decoration,50,Đèn trang trí sự kiện - led strip trang trí,bộ/md,False,,True
+boq_category_dc_sk,DC.SK,Booth + Trang trí sự kiện,decoration,60,Booth triển lãm - trang trí đường phố - sân khấu,gói/bộ,False,Tính thời vụ,True
+boq_category_dc_vc,DC.VC,VC + Lắp đặt + Tháo dỡ,decoration,70,Vận chuyển - lắp đặt - tháo dỡ (decor/event),gói,False,,True

@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================== VERIFICATION PAGE ======================== -->
+    <template id="portal_sale_order_verify" name="Sale Order - Phone Verification">
+        <t t-call="website.layout">
+            <div class="container" style="margin-top: 40px;">
+
+                <!-- Header -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2>🔐 Xác Thực Số Điện Thoại</h2>
+                        <p class="text-muted">Vui lòng xác thực số điện thoại của bạn để tiếp tục duyệt Báo giá</p>
+                    </div>
+                </div>
+
+                <!-- Order Info Card -->
+                <div class="row mb-4">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Thông Tin Báo Giá</h5>
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Số Báo Giá:</strong></td>
+                                        <td t-esc="order.name" />
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Khách Hàng:</strong></td>
+                                        <td t-esc="order.partner_id.name" />
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ngày Tạo:</strong></td>
+                                        <td t-esc="order.create_date.strftime('%d/%m/%Y') if order.create_date else 'N/A'" />
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tổng Tiền:</strong></td>
+                                        <td t-esc="'{:,.0f} VND'.format(order.amount_total)" />
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verification Form -->
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5>Nhập Số Điện Thoại Để Xác Thực</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <!-- Error Message -->
+                                <t t-if="error_msg">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>❌ Lỗi Xác Thực</strong>
+                                        <p t-esc="error_msg" />
+                                    </div>
+                                </t>
+
+                                <!-- Form -->
+                                <form method="POST" action="" class="form-horizontal">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+
+                                    <div class="form-group mb-3">
+                                        <label for="phone" class="form-label">
+                                            <strong>Số Điện Thoại:</strong>
+                                        </label>
+                                        <input type="tel"
+                                               id="phone"
+                                               name="phone"
+                                               class="form-control form-control-lg"
+                                               placeholder="Ví dụ: 0912 345 678 hoặc +84912345678"
+                                               required="required" />
+                                        <small class="form-text text-muted">
+                                            Nhập số điện thoại liên hệ của bạn. Hệ thống sẽ kiểm tra với thông tin đăng ký.
+                                        </small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit"
+                                                name="verify_action"
+                                                value="verify"
+                                                class="btn btn-primary btn-lg w-100">
+                                            ✓ Xác Thực
+                                        </button>
+                                    </div>
+
+                                </form>
+
+                                <hr />
+
+                                <p class="text-muted text-center">
+                                    <small>Quá trình xác thực sẽ được ghi vết để đảm bảo an toàn.</small>
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Info -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="alert alert-info" role="alert">
+                            <strong>ℹ️ Thông Tin:</strong>
+                            <ul>
+                                <li>Số điện thoại này sẽ được lưu lại để xác thực khi ký điện tử</li>
+                                <li>Hệ thống chấp nhận định dạng: 0912345678, 0912 345 678, +84912345678</li>
+                                <li>Nếu gặp vấn đề, vui lòng liên hệ bộ phận bán hàng</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- ======================== MAIN PORTAL VIEW ======================== -->
+    <template id="portal_sale_order_view" name="Sale Order - Review &amp; Sign">
+        <t t-call="website.layout">
+            <div class="container" style="margin-top: 40px;">
+
+                <!-- Header -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2>📋 Duyệt Báo Giá & Ký Điện Tử</h2>
+                    </div>
+                </div>
+
+                <!-- Status Badge -->
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <t t-if="order.is_signed_electronically">
+                            <span class="badge bg-success">✓ ĐÃ KÝ ĐIỆN TỬ</span>
+                        </t>
+                        <t t-else="">
+                            <span class="badge bg-warning">⏳ CHỜ KÝ</span>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Order Details Card -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5>Thông Tin Báo Giá</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Số Báo Giá:</strong> <t t-esc="order.name" /></p>
+                                        <p><strong>Trạng Thái:</strong> <t t-esc="dict(order._fields['state'].selection).get(order.state, order.state)" /></p>
+                                        <p><strong>Khách Hàng:</strong> <t t-esc="order.partner_id.name" /></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Ngày Tạo:</strong> <t t-esc="order.create_date.strftime('%d/%m/%Y') if order.create_date else 'N/A'" /></p>
+                                        <p><strong>Người Tạo:</strong> <t t-esc="order.user_id.name" /></p>
+                                        <p><strong>Tổng Tiền:</strong> <strong style="color: #d9534f;"><t t-esc="'{:,.0f} VND'.format(order.amount_total)" /></strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Lines -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5>Chi Tiết Báo Giá</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-sm">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width: 50%;">Sản Phẩm / Dịch Vụ</th>
+                                            <th style="width: 10%;" class="text-center">SL</th>
+                                            <th style="width: 15%;" class="text-right">Đơn Giá</th>
+                                            <th style="width: 15%;" class="text-right">Thành Tiền</th>
+                                            <th style="width: 10%;" class="text-center">Ghi Chú</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="order.order_line_ids" t-as="line">
+                                            <tr>
+                                                <td>
+                                                    <strong t-esc="line.product_id.name" />
+                                                    <t t-if="line.description">
+                                                        <br/>
+                                                        <small t-esc="line.description" />
+                                                    </t>
+                                                </td>
+                                                <td class="text-center">
+                                                    <t t-esc="'{:.2f}'.format(line.product_qty)" />
+                                                    <t t-esc="line.product_uom.name" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <t t-esc="'{:,.0f}'.format(line.price_unit)" />
+                                                </td>
+                                                <td class="text-right">
+                                                    <t t-esc="'{:,.0f}'.format(line.price_subtotal)" />
+                                                </td>
+                                                <td class="text-center">
+                                                    <t t-if="line.job_id">
+                                                        <span class="badge bg-info" t-esc="line.job_id.code" />
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <tfoot class="table-light">
+                                        <tr>
+                                            <th colspan="3" class="text-right">Cộng Tiền:</th>
+                                            <th class="text-right"><t t-esc="'{:,.0f} VND'.format(order.amount_untaxed)" /></th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="3" class="text-right">Thuế (10%):</th>
+                                            <th class="text-right"><t t-esc="'{:,.0f} VND'.format(order.amount_tax)" /></th>
+                                            <th></th>
+                                        </tr>
+                                        <tr style="background: #f0f0f0; font-size: 16px;">
+                                            <th colspan="3" class="text-right">Tổng Cộng:</th>
+                                            <th class="text-right" style="color: #d9534f;"><strong><t t-esc="'{:,.0f} VND'.format(order.amount_total)" /></strong></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signature Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <h5>🖊️ Ký Điện Tử</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <t t-if="order.is_signed_electronically">
+                                    <!-- Signed - Show confirmation -->
+                                    <div class="alert alert-success" role="alert">
+                                        <h5>✅ Ký Điện Tử Thành Công</h5>
+                                        <table class="table table-sm mt-3">
+                                            <tr>
+                                                <td><strong>Ký bởi:</strong></td>
+                                                <td t-esc="order.signed_by" />
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Số Điện Thoại:</strong></td>
+                                                <td t-esc="order.signed_by_phone" />
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Thời Gian:</strong></td>
+                                                <td t-esc="order.signature_timestamp.strftime('%d/%m/%Y %H:%M:%S') if order.signature_timestamp else 'N/A'" />
+                                            </tr>
+                                            <tr>
+                                                <td><strong>IP Address:</strong></td>
+                                                <td><code t-esc="order.signature_ip" /></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <!-- Not signed - Show signing form -->
+                                    <p class="mb-3">
+                                        Nhấp nút dưới đây để ký điện tử báo giá này. Chữ ký của bạn sẽ được lưu vĩnh viễn.
+                                    </p>
+
+                                    <button class="btn btn-primary btn-lg w-100"
+                                            id="btn_sign_order"
+                                            data-order-id="123"
+                                            data-access-token="">
+                                        🖊️ Ký Điện Tử Báo Giá
+                                    </button>
+
+                                    <p class="text-muted mt-3" style="font-size: 12px;">
+                                        <strong>Lưu ý:</strong> Khi ký điện tử, bạn xác nhận rằng mình là đại diện hợp pháp của khách hàng
+                                        và đồng ý với tất cả các điều khoản trong báo giá.
+                                    </p>
+                                </t>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download PDF -->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a t-att-href="'/my/sale-order-pdf/{}?access_token={}'.format(order.id, access_token)"
+                           class="btn btn-secondary btn-lg">
+                            📥 Tải Về PDF
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- JavaScript for signing -->
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    var btnSign = document.getElementById('btn_sign_order');
+                    if (btnSign) {
+                        btnSign.onclick = function() {
+                            handleSignOrder(this);
+                        };
+                    }
+                });
+
+                function handleSignOrder(button) {
+                    button.disabled = true;
+                    button.textContent = '⏳ Đang ký...';
+
+                    var orderId = button.getAttribute('data-order-id');
+                    var accessToken = button.getAttribute('data-access-token');
+
+                    fetch('/my/sale-order-sign/' + orderId, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            access_token: accessToken,
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            window.location.href = data.redirect_url;
+                        } else {
+                            alert(data.message);
+                            button.disabled = false;
+                            button.textContent = '🖊️ Ký Điện Tử Báo Giá';
+                        }
+                    })
+                    .catch(error => {
+                        alert('❌ Lỗi: ' + error);
+                        button.disabled = false;
+                        button.textContent = '🖊️ Ký Điện Tử Báo Giá';
+                    });
+                }
+            </script>
+
+        </t>
+    </template>
+
+</odoo>

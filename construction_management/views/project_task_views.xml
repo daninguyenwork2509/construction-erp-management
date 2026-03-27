@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ===== FORM VIEW - PROJECT TASK ===== -->
+        <record id="view_project_task_form_construction" model="ir.ui.view">
+            <field name="name">project.task.form.construction</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id">project.view_task_form2</field>
+            <field name="arch" type="xml">
+                <!-- Thêm nút bấm vào Header -->
+                <xpath expr="//header/button[@name='action_open_task']" position="before">
+                    <button
+                        name="action_close_survey_task"
+                        type="object"
+                        string="Hoàn Thành Khảo Sát"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('task_stage_type', '!=', 'survey')]}"
+                    />
+                    <button
+                        name="action_upload_design_file"
+                        type="object"
+                        string="Xác Nhận Up File & Đóng Task"
+                        class="oe_highlight"
+                        attrs="{'invisible': [('task_stage_type', '!=', 'design')]}"
+                    />
+                    <button
+                        name="action_lock_survey_data"
+                        type="object"
+                        string="Khóa Dữ liệu"
+                        attrs="{'invisible': [('is_survey_data_locked', '=', True)]}"
+                    />
+                    <button
+                        name="action_unlock_survey_data"
+                        type="object"
+                        string="Mở Khóa Dữ liệu"
+                        attrs="{'invisible': [('is_survey_data_locked', '=', False)]}"
+                    />
+                </xpath>
+
+                <!-- Chèn task_stage_type và design_file_type ngay dưới tên task -->
+                <xpath expr="//field[@name='name']" position="after">
+                    <field
+                        name="task_stage_type"
+                        widget="selection"
+                        readonly="True"
+                    />
+                    <field name="design_file_type" widget="selection" />
+                    <field name="is_survey_data_locked" />
+                </xpath>
+
+                <!-- Thêm sale_order_id -->
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="sale_order_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ===== TREE VIEW - PROJECT TASK ===== -->
+        <record id="view_project_task_tree_construction" model="ir.ui.view">
+            <field name="name">project.task.tree.construction</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id">project.view_task_tree2</field>
+            <field name="arch" type="xml">
+                <!-- Thêm cột task_stage_type vào tree -->
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="task_stage_type" />
+                    <field name="sale_order_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ===== SEARCH VIEW - PROJECT TASK ===== -->
+        <record id="view_project_task_search_construction" model="ir.ui.view">
+            <field name="name">project.task.search.construction</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id">project.view_task_search_form</field>
+            <field name="arch" type="xml">
+                <!-- Thêm filter theo task_stage_type -->
+                <xpath expr="//filter[@name='my_tasks']" position="after">
+                    <separator />
+                    <filter
+                        name="filter_survey"
+                        string="Khảo sát"
+                        domain="[('task_stage_type', '=', 'survey')]"
+                    />
+                    <filter
+                        name="filter_design"
+                        string="Thiết kế"
+                        domain="[('task_stage_type', '=', 'design')]"
+                    />
+                    <filter
+                        name="filter_execution"
+                        string="Thi công"
+                        domain="[('task_stage_type', '=', 'execution')]"
+                    />
+                </xpath>
+
+                <!-- Thêm filter theo trạng thái khóa dữ liệu -->
+                <xpath expr="//filter[@name='my_tasks']" position="after">
+                    <separator />
+                    <filter
+                        name="filter_locked"
+                        string="Dữ liệu bị khóa"
+                        domain="[('is_survey_data_locked', '=', True)]"
+                    />
+                    <filter
+                        name="filter_unlocked"
+                        string="Dữ liệu chưa khóa"
+                        domain="[('is_survey_data_locked', '=', False)]"
+                    />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

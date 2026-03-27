@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================== Form View ======================== -->
+    <record id="stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking - Construction Form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Thêm sheet chứa thông tin project & nghiệm thu -->
+            <xpath expr="//sheet" position="before">
+                <!-- Access Control Warning -->
+                <div class="alert alert-info" role="alert">
+                    <strong>ℹ️ QUY TẮC NGHIỆM THU:</strong>
+                    <br/>
+                    Chỉ <strong>Project Manager / Site Supervisor</strong> mới được phép validate nhận hàng.
+                    <br/>
+                    Thu mua KHÔNG được tự ký nhận khống.
+                </div>
+            </xpath>
+
+            <!-- SmartButtons -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <!-- Số lượng Task link -->
+                <button name="%(stock.view_picking_form)d" type="action"
+                        class="oe_stat_button" icon="fa-tasks"
+                        attrs="{'invisible': [('task_id', '=', False)]}">
+                    <field name="task_id" widget="statinfo" />
+                </button>
+
+                <!-- Inspection Status -->
+                <button name="action_inspection_done" type="object"
+                        class="oe_stat_button" icon="fa-check-circle"
+                        attrs="{'invisible': ['|', ('is_inspection_done', '=', True), ('state', 'not in', ['assigned', 'waiting'])]}"
+                        string="Kiểm tra Hàng">
+                    <span>Chưa Kiểm tra</span>
+                </button>
+
+                <button class="oe_stat_button" icon="fa-check-square"
+                        attrs="{'invisible': [('is_inspection_done', '=', False)]}">
+                    <field name="is_inspection_done" widget="boolean"/>
+                    <span>Đã Kiểm tra</span>
+                </button>
+            </xpath>
+
+            <!-- Section 1: Project Info -->
+            <xpath expr="//group[@name='destination']" position="after">
+                <group name="project_info" string="Thông tin Dự án &amp; Nghiệm Thu">
+                    <field name="task_id" />
+                    <field name="sale_order_id" />
+                    <field name="supervisor_id" />
+                </group>
+            </xpath>
+
+            <!-- Section 2: Inspection Details -->
+            <xpath expr="//field[@name='origin']" position="after">
+                <group name="inspection" string="Chi tiết Kiểm tra Chất lượng">
+                    <field name="is_inspection_done" />
+                    <field name="inspection_date" />
+                    <field name="inspection_notes" placeholder="Ghi chú: Kiểm tra khối lượng, chất lượng, đúng hóa đơn..." />
+                    <field name="validated_by_supervisor" />
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== Tree View ======================== -->
+    <record id="stock_picking_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.picking - Construction Tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field name="task_id" />
+                <field name="is_inspection_done" />
+                <field name="supervisor_id" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== Search View ======================== -->
+    <record id="stock_picking_search_inherit" model="ir.ui.view">
+        <field name="name">stock.picking - Construction Search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_filter"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//filter[@name='done']" position="after">
+                <separator/>
+                <filter name="awaiting_inspection" string="Chờ Kiểm tra"
+                        domain="[('is_inspection_done', '=', False), ('state', '!=', 'done')]"/>
+                <filter name="inspected" string="Đã Kiểm tra"
+                        domain="[('is_inspection_done', '=', True)]"/>
+                <filter name="validated_supervisor" string="Đã Validate bởi Giám sát"
+                        domain="[('validated_by_supervisor', '=', True)]"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="task_id" />
+                <field name="supervisor_id" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ======================== Inspection Wizard Form ======================== -->
+    <record id="stock_picking_inspection_form" model="ir.ui.view">
+        <field name="name">stock.picking.inspection - Form</field>
+        <field name="model">stock.picking.inspection</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="picking_id" readonly="1" />
+                </group>
+                <group string="Ghi chú Kiểm tra">
+                    <field name="inspection_notes" nolabel="1" colspan="4" />
+                </group>
+                <footer>
+                    <button name="action_confirm_inspection" type="object"
+                            string="✓ Xác nhận Kiểm tra" class="btn-primary"/>
+                    <button string="Hủy" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

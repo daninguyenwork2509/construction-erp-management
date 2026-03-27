@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ===== BOQ CATEGORY (Level 1) ===== -->
+
+        <!-- Form View - BOQ Category -->
+        <record id="view_boq_category_form" model="ir.ui.view">
+            <field name="name">boq.category.form</field>
+            <field name="model">boq.category</field>
+            <field name="arch" type="xml">
+                <form string="Hạng mục (Level 1)">
+                    <sheet>
+                        <group>
+                            <field name="name" required="True" />
+                            <field name="order_id" required="True" />
+                            <field name="sequence" />
+                        </group>
+                        <group>
+                            <field name="description" />
+                        </group>
+
+                        <!-- Hiển thị các Công tác (Level 2) thuộc hạng mục này -->
+                        <separator string="Công tác (Level 2)" />
+                        <field name="job_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" />
+                                <field name="name" />
+                                <field name="unit" />
+                                <field name="description" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View - BOQ Category -->
+        <record id="view_boq_category_tree" model="ir.ui.view">
+            <field name="name">boq.category.tree</field>
+            <field name="model">boq.category</field>
+            <field name="arch" type="xml">
+                <tree string="Hạng mục (Level 1)" editable="bottom">
+                    <field name="sequence" widget="handle" />
+                    <field name="name" />
+                    <field name="order_id" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View - BOQ Category -->
+        <record id="view_boq_category_search" model="ir.ui.view">
+            <field name="name">boq.category.search</field>
+            <field name="model">boq.category</field>
+            <field name="arch" type="xml">
+                <search string="Tìm Hạng mục">
+                    <field name="name" />
+                    <field name="order_id" />
+                    <separator />
+                    <filter name="group_by_order" string="Theo Báo giá" context="{'group_by': 'order_id'}" />
+                </search>
+            </field>
+        </record>
+
+        <!-- ===== BOQ JOB (Level 2) ===== -->
+
+        <!-- Form View - BOQ Job -->
+        <record id="view_boq_job_form" model="ir.ui.view">
+            <field name="name">boq.job.form</field>
+            <field name="model">boq.job</field>
+            <field name="arch" type="xml">
+                <form string="Công tác (Level 2)">
+                    <sheet>
+                        <group>
+                            <field name="name" required="True" />
+                            <field name="category_id" required="True" />
+                            <field name="sequence" />
+                            <field name="unit" />
+                        </group>
+                        <group>
+                            <field name="description" />
+                        </group>
+
+                        <!-- Hiển thị các dòng báo giá (Level 3) thuộc công tác này -->
+                        <separator string="Chi tiết Báo giá (Level 3)" />
+                        <field name="order_line_ids" nolabel="1" readonly="1">
+                            <tree>
+                                <field name="order_id" />
+                                <field name="product_id" />
+                                <field name="quantity" />
+                                <field name="price_unit" />
+                                <field name="price_subtotal" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View - BOQ Job -->
+        <record id="view_boq_job_tree" model="ir.ui.view">
+            <field name="name">boq.job.tree</field>
+            <field name="model">boq.job</field>
+            <field name="arch" type="xml">
+                <tree string="Công tác (Level 2)" editable="bottom">
+                    <field name="sequence" widget="handle" />
+                    <field name="name" />
+                    <field name="category_id" />
+                    <field name="unit" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View - BOQ Job -->
+        <record id="view_boq_job_search" model="ir.ui.view">
+            <field name="name">boq.job.search</field>
+            <field name="model">boq.job</field>
+            <field name="arch" type="xml">
+                <search string="Tìm Công tác">
+                    <field name="name" />
+                    <field name="category_id" />
+                    <separator />
+                    <filter name="group_by_category" string="Theo Hạng mục" context="{'group_by': 'category_id'}" />
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

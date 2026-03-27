@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:15
+    container_name: thuThiem2_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes:
+      - thuThiem2_db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - thuThiem2_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  odoo:
+    image: odoo:latest
+    container_name: thuThiem2_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8070:8069"
+    environment:
+      HOST: db
+      PORT: 5432
+      USER: odoo
+      PASSWORD: odoo
+      ODOO_ADDONS_PATH: /mnt/extra-addons
+    volumes:
+      - ./construction_management:/mnt/extra-addons/construction_management
+      - ./config:/etc/odoo
+      - thuThiem2_web_data:/var/lib/odoo
+    networks:
+      - thuThiem2_net
+    command: odoo -i construction_management --db_host=db --db_user=odoo --db_password=odoo
+
+volumes:
+  thuThiem2_db_data:
+  thuThiem2_web_data:
+
+networks:
+  thuThiem2_net:
+    driver: bridge

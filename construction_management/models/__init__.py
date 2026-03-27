@@ -1,0 +1,18 @@
+from . import (
+    boq_category,
+    boq_job,
+    boq_template,
+    sale_order,
+    sale_order_line,
+    sale_order_signature,
+    sale_order_reconciliation,
+    project_task,
+    project_milestone,
+    project_closure,
+    purchase_order,
+    stock_picking,
+    variation_order,
+    daily_log,
+    defect,
+    qc_checklist,
+)
