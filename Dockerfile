@@ -1,15 +1,9 @@
 FROM odoo:19
 
-# Create addons directory
-RUN mkdir -p /mnt/extra-addons
-
 # Copy construction_management module
-COPY construction_management /mnt/extra-addons/construction_management
-COPY combined_workflow_demo.py /tmp/
-COPY test_role_workflows.py /tmp/
-
-# Set correct permissions
-RUN chown -R odoo:odoo /mnt/extra-addons
+COPY --chown=odoo:odoo construction_management /mnt/extra-addons/construction_management
+COPY --chown=odoo:odoo combined_workflow_demo.py /tmp/
+COPY --chown=odoo:odoo test_role_workflows.py /tmp/
 
 EXPOSE 8069
 
