@@ -1,1 +1,0 @@
-web: odoo --db_host=${DATABASE_URL_HOST} --db_user=${DATABASE_URL_USER} --db_password=${DATABASE_URL_PASSWORD} --db_port=5432 --db_name=${DATABASE_URL_NAME} -i construction_management --addons-path=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons

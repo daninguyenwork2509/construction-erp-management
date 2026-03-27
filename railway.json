@@ -1,9 +1,0 @@
-{
-  "$schema": "https://railway.app/json-schema/railway-schema.json",
-  "build": {
-    "builder": "dockerfile"
-  },
-  "deploy": {
-    "startCommand": "odoo -i construction_management --db_host=$DATABASE_URL_HOST --db_user=$DATABASE_URL_USER --db_password=$DATABASE_URL_PASSWORD --db_port=5432 --db_name=$DATABASE_URL_NAME --addons-path=/app/construction_management,/usr/lib/python3/dist-packages/odoo/addons"
-  }
-}
